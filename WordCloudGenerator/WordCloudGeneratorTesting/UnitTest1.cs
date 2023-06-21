@@ -84,33 +84,19 @@ namespace WordCloudGeneratorTesting
         }
 
         [Fact]
-        public void Generate_Word_Cloud_ShouldPrintFilteredWordsAndfrequency()
+        public void Generate_Word_Cloud_ShouldReturnNewDictionaryWithFilteredWordsAndfrequency()
         {
             //Arrange
-
             WordGenerator wordGenerator = new WordGenerator();
-            // Generate word cloud
             Dictionary<string, int> wordCloud = wordGenerator.GenerateWordCloud(FilePath);
-            // Filter the word cloud using the stop words
             IEnumerable<string> filteredWords = wordGenerator.FilteredWords(wordCloud, wordGenerator.StopWords);
 
             //Act
-
-            var filteredDictionary = PrintWordCloud(wordCloud, filteredWords);
+            var filteredDictionary = wordGenerator.FilteredDictionary(wordCloud, filteredWords);
 
             //Assert
-            // Output
             filteredDictionary.Should().Contain("data", 27);
-        }
-
-        Dictionary<string, int> PrintWordCloud(Dictionary<string, int> dictionary, IEnumerable<string> filteredWords)
-        {
-            // Apply filtered words and return a new dictionary
-            var filteredDictionary = dictionary
-                .Where(entry => filteredWords
-                    .Contains(entry.Key))
-                .ToDictionary(entry => entry.Key, entry => entry.Value);
-            return filteredDictionary;
+            filteredDictionary.Should().NotContainKey("such");
         }
     }
 }

@@ -10,7 +10,7 @@ namespace WordCloudGenerator
     {
         public readonly HashSet<string> StopWords = new HashSet<string>
         {
-            "is", "an", "that", "uses", "and", "to", "from", "it", "and", "in", "are", "as", "at", "be", "but", "by", "can", "did", "do", "does", "each", "for", "how", "i", "if", "is", "it", "its", "just", "may", "me", "might", "my", "nor", "not", "of", "when", "where", "which", "while", "who", "why", "with", "without", "yes", "you"
+            "is", "an", "that", "uses", "and", "to", "from", "it", "and", "in", "are", "as", "at", "be", "but", "by", "can", "did", "do", "does", "each", "for", "how", "i", "if", "is", "it", "its", "just", "may", "me", "might", "my", "nor", "not", "of", "when", "where", "which", "while", "who", "why", "with", "without", "yes", "you", "", "a", "such"
         };
 
         private readonly string FilePath = @"data.txt";
@@ -49,6 +49,16 @@ namespace WordCloudGenerator
         {
             IEnumerable<string> filteredWords = dictionary.Keys.Where(sw => !stopWords.Contains(sw));
             return filteredWords;
+        }
+
+        public Dictionary<string, int> FilteredDictionary(Dictionary<string, int> dictionary, IEnumerable<string> filteredWords)
+        {
+            // Apply filtered words and return a new dictionary
+            var filteredDictionary = dictionary
+                .Where(entry => filteredWords
+                    .Contains(entry.Key))
+                .ToDictionary(entry => entry.Key, entry => entry.Value);
+            return filteredDictionary;
         }
     }
 }
