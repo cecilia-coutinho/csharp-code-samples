@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            // Run the test method
+            WordGenerator wordGenerator = new WordGenerator();
+
         }
 
     }
