@@ -20,5 +20,29 @@ namespace WordCloudGeneratorTesting
             Assert.True(fileExists);
 
         }
+
+        [Fact]
+        public void Read_In_Text_file_ShouldReturnFileContents()
+        {
+            // Arrange
+            string expectedContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            string filePath = @"data.txt";
+            //WordGenerator wordGenerator = new WordGenerator();
+
+            // Act
+            string[] result = ReturnFileContent(filePath);
+            string firstLineResult = result.FirstOrDefault();
+            //bool resultContains = firstLine.Contains(expectedContent);
+
+            // Assert
+            Assert.Contains(expectedContent, firstLineResult);
+        }
+
+        string[] ReturnFileContent(string filePath)
+        {
+            string[] content = File.ReadAllLines(filePath);
+            return content;
+
+        }
     }
 }
