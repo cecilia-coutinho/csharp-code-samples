@@ -13,6 +13,7 @@ namespace WordCloudGenerator
             "is", "an", "that", "uses", "and", "to", "from", "it", "and", "in", "are", "as", "at", "be", "but", "by", "can", "did", "do", "does", "each", "for", "how", "i", "if", "is", "it", "its", "just", "may", "me", "might", "my", "nor", "not", "of", "when", "where", "which", "while", "who", "why", "with", "without", "yes", "you"
         };
 
+        private readonly string FilePath = @"data.txt";
 
         public bool FileExists(string filePath)
         {
@@ -31,13 +32,14 @@ namespace WordCloudGenerator
 
             // Remove non-alpha characters and convert to lowercase
             string[] cleanString = content
+                .SelectMany(s => s.Split(' '))
                 .Select(s => new string(s
                     .Where(c => char.IsLetter(c) || char.IsWhiteSpace(c) || c == '-')
                     .ToArray()))
                 .ToArray();
 
             Dictionary<string, int> wordCloud = cleanString
-                .GroupBy(word => word)
+                .GroupBy(word => word.ToLower())
                 .ToDictionary(g => g.Key, g => g.Count());
 
             return wordCloud;
