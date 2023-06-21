@@ -45,35 +45,10 @@ namespace WordCloudGeneratorTesting
             WordGenerator wordGenerator = new WordGenerator();
 
             //Act
-            Dictionary<string, int> result = GenerateWordCloud(FilePath);
+            Dictionary<string, int> result = wordGenerator.GenerateWordCloud(FilePath);
 
             //Assert
             result.Should().HaveCount(8);
-
-        }
-
-        public Dictionary<string, int> GenerateWordCloud(string filePath)
-        {
-            WordGenerator wordGenerator = new WordGenerator();
-            string[] content = wordGenerator.ReturnFileContent(filePath);
-
-            // Remove non-alpha characters and convert to lowercase
-            string[] cleanString = content
-                .Select(s => new string(s
-                    .Where(c => char.IsLetter(c) || char.IsWhiteSpace(c) || c == '-')
-                    .ToArray()))
-                .ToArray();
-
-            // Remove stopwords
-            //IEnumerable<string> filteredWords = words.Where(word => !Stopwords.Contains(word));
-
-
-            Dictionary<string, int> wordCloud = cleanString
-                .GroupBy(word => word)
-                .ToDictionary(g => g.Key, g => g.Count());
-
-            return wordCloud;
-
         }
 
 
@@ -83,16 +58,13 @@ namespace WordCloudGeneratorTesting
             // Arrange
             WordGenerator wordGenerator = new WordGenerator();
             var stopwords = wordGenerator.StopWords;
+            Dictionary<string, int> dictionary = wordGenerator.GenerateWordCloud(FilePath);
 
             //Act
-            Dictionary<string, int> wordCloud = GenerateWordCloud(FilePath);
-            IEnumerable<string> filteredWords = wordCloud.Keys.Where(sw => !stopwords.Contains(sw));
+            IEnumerable<string> filteredWords = wordGenerator.FilteredWords(dictionary, stopwords);
 
             //Assert
             filteredWords.Should().NotContain(stopwords);
-
         }
-
-
     }
 }

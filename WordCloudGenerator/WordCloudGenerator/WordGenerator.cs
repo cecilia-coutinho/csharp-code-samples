@@ -24,5 +24,29 @@ namespace WordCloudGenerator
             string[] content = File.ReadAllLines(filePath);
             return content;
         }
+
+        public Dictionary<string, int> GenerateWordCloud(string filePath)
+        {
+            string[] content = ReturnFileContent(filePath);
+
+            // Remove non-alpha characters and convert to lowercase
+            string[] cleanString = content
+                .Select(s => new string(s
+                    .Where(c => char.IsLetter(c) || char.IsWhiteSpace(c) || c == '-')
+                    .ToArray()))
+                .ToArray();
+
+            Dictionary<string, int> wordCloud = cleanString
+                .GroupBy(word => word)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            return wordCloud;
+        }
+
+        public IEnumerable<string> FilteredWords(Dictionary<string, int> dictionary, HashSet<string> stopWords)
+        {
+            IEnumerable<string> filteredWords = dictionary.Keys.Where(sw => !stopWords.Contains(sw));
+            return filteredWords;
+        }
     }
 }
