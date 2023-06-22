@@ -17,7 +17,7 @@ namespace VowelConsonantCounter
 
             while (true)
             {
-                Console.Write("\nWrite a word: ");
+                Console.Write("\nWrite a text or word: ");
                 string? wordToCount = Console.ReadLine();
 
                 int totalConsonants = counter.GetTotalLetterCategory(wordToCount, counter.Consonants);
@@ -28,7 +28,7 @@ namespace VowelConsonantCounter
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"\nRESULTS:");
                 Console.ResetColor();
-                Console.WriteLine($"Word: {wordToCount};\n" +
+                Console.WriteLine($"Word/Text: {wordToCount};\n" +
                     $"number of characters (with space): {totalCharacters};\n" +
                     $"number of characters (without space): {totalCharactersWithoutSpace};\n" +
                     $"Number of Vowels: {totalVowels};\n" +
