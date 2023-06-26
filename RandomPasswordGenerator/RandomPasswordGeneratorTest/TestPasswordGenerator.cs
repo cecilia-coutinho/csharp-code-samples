@@ -42,44 +42,40 @@ namespace RandomPasswordGeneratorTest
         public void GeneratePassword_Should_Return_Valid_Password()
         {
             //Arrange
-            int minLength = 8;
-            int maxLength = 12;
+            int length = 12;
             char[] validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+[{]}:>|/?".ToCharArray();
             //PasswordGenerator passGenerator = new PasswordGenerator();
 
             //Act
-            string password = GeneratePassword(minLength, maxLength);
+            string password = GeneratePassword(length);
 
             //Assert
             password.Should().NotBeNullOrEmpty();
             password.Should().NotBeNullOrWhiteSpace();
-            password.Length.Should().BeGreaterThanOrEqualTo(minLength);
-            password.Length.Should().BeLessThanOrEqualTo(maxLength);
+            password.Length.Should().Be(length);
             password.ToCharArray().All(c => validCharacters.Contains(c)).Should().BeTrue();
         }
 
-        string GeneratePassword(int minLength, int maxLength)
+        string GeneratePassword(int lenght)
         {
             PasswordGenerator passGenerator = new PasswordGenerator();
             char[] validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+[{]}:>|/?".ToCharArray();
 
-            int minLengthIndex = 0;
-            int maxLengthIndex = validCharacters.Length - 1;
+            int minIndex = 0;
+            int maxIndex = validCharacters.Length - 1;
 
             using (var randomNumberGenerator = RandomNumberGenerator.Create())
             {
-                var passwordLength = passGenerator.GetRandomIntWithinRange(randomNumberGenerator, minLength, maxLength);
-                var password = new char[passwordLength];
+                var password = new char[lenght];
 
                 for (int i = 0; i < password.Length; i++)
                 {
-                    int randomIndex = passGenerator.GetRandomIntWithinRange(randomNumberGenerator, minLengthIndex, maxLengthIndex);
+                    int randomIndex = passGenerator.GetRandomIntWithinRange(randomNumberGenerator, minIndex, maxIndex);
                     char randomCharacter = validCharacters[randomIndex];
                     password[i] = randomCharacter;
                 }
                 return new string(password);
             }
-
         }
 
     }
