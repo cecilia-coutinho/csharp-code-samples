@@ -4,8 +4,32 @@ namespace RandomPasswordGenerator
 {
     public class PasswordGenerator
     {
-        static void Main(string[] args)
+        public readonly char[] validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+[{]}:>|/?".ToCharArray();
+
+        public string GeneratePassword(int lenght)
         {
+            // Min and max index for validCharacters array
+            int minIndex = 0;
+            int maxIndex = validCharacters.Length - 1;
+
+            using (var randomNumberGenerator = RandomNumberGenerator.Create())
+            {
+                var password = new char[lenght]; //store password in a char array
+
+                for (int i = 0; i < password.Length; i++)
+                {
+                    // Generate a random index within specified range
+                    int randomIndex = GetRandomIntWithinRange(randomNumberGenerator, minIndex, maxIndex);
+
+                    // Retrieve random character from the validCharacters array
+                    char randomCharacter = validCharacters[randomIndex];
+
+                    // Assign the random char to the corresponding position in the password array
+                    password[i] = randomCharacter;
+                }
+                // Convert the char array to a string and return the password
+                return new string(password);
+            }
         }
 
         public int GetRandomInt(RandomNumberGenerator randomNumberGenerator)
