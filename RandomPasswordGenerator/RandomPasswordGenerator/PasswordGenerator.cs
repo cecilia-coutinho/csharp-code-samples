@@ -4,13 +4,12 @@ namespace RandomPasswordGenerator
 {
     public class PasswordGenerator
     {
-        public readonly char[] validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_-+[{]}:>|/?".ToCharArray();
+        public readonly char[] validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*_-+>|?".ToCharArray();
 
         public string GeneratePassword(int lenght)
         {
-            // Min and max index for validCharacters array
-            int minIndex = 0;
-            int maxIndex = validCharacters.Length - 1;
+            // max index for validCharacters array
+            int maxIndex = validCharacters.Length;
 
             using (var randomNumberGenerator = RandomNumberGenerator.Create())
             {
@@ -19,7 +18,7 @@ namespace RandomPasswordGenerator
                 for (int i = 0; i < password.Length; i++)
                 {
                     // Generate a random index within specified range
-                    int randomIndex = GetRandomIntWithinRange(randomNumberGenerator, minIndex, maxIndex);
+                    int randomIndex = GetRandomIntWithinRange(randomNumberGenerator, maxIndex);
 
                     // Retrieve random character from the validCharacters array
                     char randomCharacter = validCharacters[randomIndex];
@@ -41,9 +40,9 @@ namespace RandomPasswordGenerator
             return randomInt;
         }
 
-        public int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int minInput, int maxInput)
+        public int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int maxInput)
         {
-            return Math.Clamp(GetRandomInt(randomGenerator), minInput, maxInput);
+            return Math.Abs(GetRandomInt(randomGenerator) % maxInput);
         }
     }
 }
