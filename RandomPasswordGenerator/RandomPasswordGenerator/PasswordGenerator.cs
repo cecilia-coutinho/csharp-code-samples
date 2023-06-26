@@ -16,5 +16,10 @@ namespace RandomPasswordGenerator
             int randomInt = BitConverter.ToInt32(buffer); // Convert the random bytes
             return randomInt;
         }
+
+        public int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int minInput, int maxInput)
+        {
+            return Math.Clamp(GetRandomInt(randomGenerator), minInput, maxInput);
+        }
     }
 }

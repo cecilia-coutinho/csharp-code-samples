@@ -27,20 +27,15 @@ namespace RandomPasswordGeneratorTest
         {
             //Arrange
             RandomNumberGenerator randomGenerator = RandomNumberGenerator.Create();
+            PasswordGenerator passGenerator = new PasswordGenerator();
             int minInput = 8;
             int maxInput = 12;
 
             //Act
-            int randomIntWithinRange = GetRandomIntWithinRange(randomGenerator, minInput, maxInput);
+            int randomIntWithinRange = passGenerator.GetRandomIntWithinRange(randomGenerator, minInput, maxInput);
 
             //Assert
             randomIntWithinRange.Should().BeInRange(minInput, maxInput);
-        }
-
-        int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int minInput, int maxInput)
-        {
-            PasswordGenerator passGenerator = new PasswordGenerator();
-            return Math.Clamp(passGenerator.GetRandomInt(randomGenerator), minInput, maxInput);
         }
 
     }
