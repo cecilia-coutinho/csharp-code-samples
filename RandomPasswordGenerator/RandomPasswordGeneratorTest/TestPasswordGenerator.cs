@@ -1,4 +1,5 @@
 using FluentAssertions;
+using RandomPasswordGenerator;
 using System.Security.Cryptography;
 
 namespace RandomPasswordGeneratorTest
@@ -6,13 +7,14 @@ namespace RandomPasswordGeneratorTest
     public class TestPasswordGenerator
     {
         [Fact]
-        public void Get_Random_In_Should_Return_Valid_Randon_Number()
+        public void Get_Random_Int_Should_Return_Valid_Randon_Number()
         {
             //Arrange
             RandomNumberGenerator randomGenerator = RandomNumberGenerator.Create();
+            PasswordGenerator passGenerator = new PasswordGenerator();
 
             //Act
-            int randomInt = GetRandomInt(randomGenerator);
+            int randomInt = passGenerator.GetRandomInt(randomGenerator);
 
             //Assert
             randomInt.Should().NotBe(0);
@@ -20,13 +22,26 @@ namespace RandomPasswordGeneratorTest
             randomInt.Should().NotBe(int.MinValue);
         }
 
-        int GetRandomInt(RandomNumberGenerator randomNumberGenerator)
+        [Fact]
+        public void GetRandomIntWithinRange_Should_Return_RandomInt_Within_Range()
         {
-            byte[] buffer = new byte[8]; // byte array to store the random bytes
-            randomNumberGenerator.GetBytes(buffer); // Generate random bytes
+            //Arrange
+            RandomNumberGenerator randomGenerator = RandomNumberGenerator.Create();
+            int minInput = 8;
+            int maxInput = 12;
 
-            int randomInt = BitConverter.ToInt32(buffer); // Convert the random bytes
-            return randomInt;
+            //Act
+            int randomIntWithinRange = GetRandomIntWithinRange(randomGenerator, minInput, maxInput);
+
+            //Assert
+            randomIntWithinRange.Should().BeInRange(minInput, maxInput);
         }
+
+        int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int minInput, int maxInput)
+        {
+            PasswordGenerator passGenerator = new PasswordGenerator();
+            return Math.Clamp(passGenerator.GetRandomInt(randomGenerator), minInput, maxInput);
+        }
+
     }
 }

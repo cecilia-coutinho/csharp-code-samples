@@ -1,10 +1,20 @@
-﻿namespace RandomPasswordGenerator
+﻿using System.Security.Cryptography;
+
+namespace RandomPasswordGenerator
 {
-    internal class PasswordGenerator
+    public class PasswordGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+        }
+
+        public int GetRandomInt(RandomNumberGenerator randomNumberGenerator)
+        {
+            byte[] buffer = new byte[8]; // byte array to store the random bytes
+            randomNumberGenerator.GetBytes(buffer); // Generate random bytes
+
+            int randomInt = BitConverter.ToInt32(buffer); // Convert the random bytes
+            return randomInt;
         }
     }
 }
