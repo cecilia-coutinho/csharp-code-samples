@@ -11,12 +11,11 @@ namespace RandomPasswordGenerator
         static void Main(string[] args)
         {
             PasswordGenerator passGenerator = new PasswordGenerator();
-            HashGenerator hashGenerator = new HashGenerator();
             bool generateAgain = true;
             string password = passGenerator.GeneratePassword(8);
 
             Console.WriteLine("\nWelcome to Random Password Generator App!");
-            RunData(password, passGenerator, hashGenerator);
+            RunData(password);
 
             while (generateAgain)
             {
@@ -26,7 +25,7 @@ namespace RandomPasswordGenerator
                 if (again == 'y')
                 {
                     string newPassword = passGenerator.GeneratePassword(8);
-                    RunData(newPassword, passGenerator, hashGenerator);
+                    RunData(newPassword);
                 }
                 else if (again == 'n')
                 {
@@ -40,8 +39,10 @@ namespace RandomPasswordGenerator
             Console.WriteLine("\nThanks for your visit!\n");
         }
 
-        static void RunData(string password, PasswordGenerator passGenerator, HashGenerator hashGenerator)
+        static void RunData(string password)
         {
+            HashGenerator hashGenerator = new HashGenerator();
+
             Console.WriteLine($"\nPassword:");
             Console.WriteLine(password);
 
