@@ -11,8 +11,7 @@ namespace RandomPasswordGenerator
         private static readonly int _iterations = 50000;
         private static readonly int _keySize = 32; //256bits
         private static readonly HashAlgorithmName _hashAlgorithm = HashAlgorithmName.SHA256;
-
-        public static readonly char _segmentDelimiter = ':';
+        private static readonly char _segmentDelimiter = ':';
 
         private static string GenerateHash(string input)
         {

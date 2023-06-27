@@ -14,12 +14,30 @@ namespace RandomPasswordGeneratorTest
 
             //Assert
             randomInt.Should().NotBe(0);
+        }
+
+        [Fact]
+        public void Get_Random_Int_Should_NotReturn_MaxValue()
+        {
+            //Act
+            int randomInt = PasswordGenerator.GetSalt();
+
+            //Assert
             randomInt.Should().NotBe(int.MaxValue);
+        }
+
+        [Fact]
+        public void Get_Random_Int_Should_NotReturn_MinValue()
+        {
+            //Act
+            int randomInt = PasswordGenerator.GetSalt();
+
+            //Assert
             randomInt.Should().NotBe(int.MinValue);
         }
 
         [Fact]
-        public void GetRandomIntWithinRange_Should_Return_RandomInt_Within_Range()
+        public void GetRandomIntWithinRange_Should_Return_NonNegative_Integer()
         {
             //Arrange
             int maxInput = 10;
@@ -29,11 +47,65 @@ namespace RandomPasswordGeneratorTest
 
             //Assert
             randomIntWithinRange.Should().BeGreaterOrEqualTo(0);
+        }
+
+        [Fact]
+        public void GetRandomIntWithinRange_Should_Return_Value_Less_Than_MaxInput()
+        {
+            //Arrange
+            int maxInput = 10;
+
+            //Act
+            int randomIntWithinRange = PasswordGenerator.GetRandomIntWithinRange(maxInput);
+
+            //Assert
             randomIntWithinRange.Should().BeLessThan(maxInput);
         }
 
         [Fact]
-        public void GeneratePassword_Should_Return_Valid_Password()
+        public void GeneratePassword_Should_Return_NonEmpty_String()
+        {
+            //Arrange
+            int length = 12;
+            PasswordGenerator passGenerator = new PasswordGenerator();
+
+            //Act
+            string password = passGenerator.GeneratePassword(length);
+
+            //Assert
+            password.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void GeneratePassword_Should_Return_NonWhiteSpaces_In_Password()
+        {
+            //Arrange
+            int length = 12;
+            PasswordGenerator passGenerator = new PasswordGenerator();
+
+            //Act
+            string password = passGenerator.GeneratePassword(length);
+
+            //Assert
+            password.Should().NotBeNullOrWhiteSpace();
+        }
+
+        [Fact]
+        public void GeneratePassword_Should_Return_Valid_Password_Length()
+        {
+            //Arrange
+            int length = 12;
+            PasswordGenerator passGenerator = new PasswordGenerator();
+
+            //Act
+            string password = passGenerator.GeneratePassword(length);
+
+            //Assert
+            password.Length.Should().Be(length);
+        }
+
+        [Fact]
+        public void GeneratePassword_Should_Return_Valid_Characters()
         {
             //Arrange
             int length = 12;
@@ -44,9 +116,6 @@ namespace RandomPasswordGeneratorTest
             string password = passGenerator.GeneratePassword(length);
 
             //Assert
-            password.Should().NotBeNullOrEmpty();
-            password.Should().NotBeNullOrWhiteSpace();
-            password.Length.Should().Be(length);
             password.ToCharArray().All(c => validCharacters.Contains(c)).Should().BeTrue();
         }
     }

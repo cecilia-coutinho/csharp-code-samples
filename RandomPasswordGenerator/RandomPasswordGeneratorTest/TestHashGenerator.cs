@@ -19,8 +19,22 @@ namespace RandomPasswordGeneratorTest
 
             //Assert
             hashedString.Should().NotBeNullOrEmpty();
-            hashedString.Should().ContainAll(":");
         }
+
+        [Fact]
+        public void GetHashedPassword_Should_Return_Hash_With_SegmentDelimiter()
+        {
+            //Arrange
+            string input = "password";
+            HashGenerator hasher = new HashGenerator();
+
+            //Act
+            string hashedString = hasher.GetHashedPassword(input);
+
+            //Assert
+            hashedString.Should().Contain(":");
+        }
+
 
         [Fact]
         public void VerifyHashing_Should_Return_True_For_Valid_Password()
