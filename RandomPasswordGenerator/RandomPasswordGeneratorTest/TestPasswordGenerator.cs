@@ -9,11 +9,8 @@ namespace RandomPasswordGeneratorTest
         [Fact]
         public void Get_Random_Int_Should_Return_Valid_Randon_Number()
         {
-            //Arrange
-            RandomNumberGenerator randomGenerator = RandomNumberGenerator.Create();
-
             //Act
-            int randomInt = PasswordGenerator.GetSalt(randomGenerator);
+            int randomInt = PasswordGenerator.GetSalt();
 
             //Assert
             randomInt.Should().NotBe(0);
@@ -25,11 +22,10 @@ namespace RandomPasswordGeneratorTest
         public void GetRandomIntWithinRange_Should_Return_RandomInt_Within_Range()
         {
             //Arrange
-            RandomNumberGenerator randomGenerator = RandomNumberGenerator.Create();
             int maxInput = 10;
 
             //Act
-            int randomIntWithinRange = PasswordGenerator.GetRandomIntWithinRange(randomGenerator, maxInput);
+            int randomIntWithinRange = PasswordGenerator.GetRandomIntWithinRange(maxInput);
 
             //Assert
             randomIntWithinRange.Should().BeGreaterOrEqualTo(0);
