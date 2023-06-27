@@ -1,15 +1,19 @@
-﻿using System.Security.Cryptography;
+﻿using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+
+[assembly: InternalsVisibleTo("RandomPasswordGeneratorTest")]
 
 namespace RandomPasswordGenerator
 {
-    public class PasswordGenerator
+    internal class PasswordGenerator
     {
-        public readonly char[] validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*_-+>|?".ToCharArray();
+        public readonly char[] ValidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*_-+>|?".ToCharArray();
+        private static readonly int _saltSize = 16; //128bits
 
         public string GeneratePassword(int lenght)
         {
-            // max index for validCharacters array
-            int maxIndex = validCharacters.Length;
+            // max index for ValidCharacters array
+            int maxIndex = ValidCharacters.Length;
 
             using (var randomNumberGenerator = RandomNumberGenerator.Create())
             {
@@ -20,8 +24,8 @@ namespace RandomPasswordGenerator
                     // Generate a random index within specified range
                     int randomIndex = GetRandomIntWithinRange(randomNumberGenerator, maxIndex);
 
-                    // Retrieve random character from the validCharacters array
-                    char randomCharacter = validCharacters[randomIndex];
+                    // Retrieve random character from the ValidCharacters array
+                    char randomCharacter = ValidCharacters[randomIndex];
 
                     // Assign the random char to the corresponding position in the password array
                     password[i] = randomCharacter;
@@ -31,15 +35,15 @@ namespace RandomPasswordGenerator
             }
         }
 
-        public int GetSalt(RandomNumberGenerator randomNumberGenerator)
+        public static int GetSalt(RandomNumberGenerator randomNumberGenerator)
         {
-            byte[] buffer = new byte[8]; // byte array to store the random bytes
+            byte[] buffer = new byte[_saltSize]; // byte array to store the random bytes
             randomNumberGenerator.GetBytes(buffer); // Generate salt
             int randomInt = (int)BitConverter.ToInt64(buffer); // Convert the random bytes
             return randomInt;
         }
 
-        public int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int maxInput)
+        public static int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int maxInput)
         {
             return Math.Abs(GetSalt(randomGenerator) % maxInput);
         }

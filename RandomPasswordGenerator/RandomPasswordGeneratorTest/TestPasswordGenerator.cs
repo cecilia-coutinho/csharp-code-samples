@@ -11,10 +11,9 @@ namespace RandomPasswordGeneratorTest
         {
             //Arrange
             RandomNumberGenerator randomGenerator = RandomNumberGenerator.Create();
-            PasswordGenerator passGenerator = new PasswordGenerator();
 
             //Act
-            int randomInt = passGenerator.GetSalt(randomGenerator);
+            int randomInt = PasswordGenerator.GetSalt(randomGenerator);
 
             //Assert
             randomInt.Should().NotBe(0);
@@ -27,11 +26,10 @@ namespace RandomPasswordGeneratorTest
         {
             //Arrange
             RandomNumberGenerator randomGenerator = RandomNumberGenerator.Create();
-            PasswordGenerator passGenerator = new PasswordGenerator();
             int maxInput = 10;
 
             //Act
-            int randomIntWithinRange = passGenerator.GetRandomIntWithinRange(randomGenerator, maxInput);
+            int randomIntWithinRange = PasswordGenerator.GetRandomIntWithinRange(randomGenerator, maxInput);
 
             //Assert
             randomIntWithinRange.Should().BeGreaterOrEqualTo(0);
@@ -44,7 +42,7 @@ namespace RandomPasswordGeneratorTest
             //Arrange
             int length = 12;
             PasswordGenerator passGenerator = new PasswordGenerator();
-            char[] validCharacters = passGenerator.validCharacters;
+            char[] validCharacters = passGenerator.ValidCharacters;
 
             //Act
             string password = passGenerator.GeneratePassword(length);
