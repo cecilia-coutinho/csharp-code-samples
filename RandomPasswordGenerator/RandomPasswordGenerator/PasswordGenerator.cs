@@ -31,18 +31,17 @@ namespace RandomPasswordGenerator
             }
         }
 
-        public int GetRandomInt(RandomNumberGenerator randomNumberGenerator)
+        public int GetSalt(RandomNumberGenerator randomNumberGenerator)
         {
             byte[] buffer = new byte[8]; // byte array to store the random bytes
-            randomNumberGenerator.GetBytes(buffer); // Generate random bytes
-
-            int randomInt = BitConverter.ToInt32(buffer); // Convert the random bytes
+            randomNumberGenerator.GetBytes(buffer); // Generate salt
+            int randomInt = (int)BitConverter.ToInt64(buffer); // Convert the random bytes
             return randomInt;
         }
 
         public int GetRandomIntWithinRange(RandomNumberGenerator randomGenerator, int maxInput)
         {
-            return Math.Abs(GetRandomInt(randomGenerator) % maxInput);
+            return Math.Abs(GetSalt(randomGenerator) % maxInput);
         }
     }
 }

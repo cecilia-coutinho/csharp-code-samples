@@ -14,7 +14,7 @@ namespace RandomPasswordGeneratorTest
             PasswordGenerator passGenerator = new PasswordGenerator();
 
             //Act
-            int randomInt = passGenerator.GetRandomInt(randomGenerator);
+            int randomInt = passGenerator.GetSalt(randomGenerator);
 
             //Assert
             randomInt.Should().NotBe(0);
