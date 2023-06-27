@@ -41,5 +41,32 @@ namespace RandomPasswordGenerator
             string hashedString = GenerateHash(password);
             return hashedString;
         }
+
+        public bool VerifyHashing(string input, string hashedString)
+        {
+            string[] segments = hashedString.Split(HashGenerator._segmentDelimiter);
+            byte[] hash = Convert.FromHexString(segments[0]);
+            byte[] salt = Convert.FromHexString(segments[1]);
+            int iterations = int.Parse(segments[2]);
+            HashAlgorithmName algorithmName = new HashAlgorithmName(segments[3]);
+
+            byte[] inputHash = Rfc2898DeriveBytes.Pbkdf2(
+                input,
+                salt,
+                iterations,
+                algorithmName,
+                hash.Length
+                );
+
+            return CryptographicOperations.FixedTimeEquals(inputHash, hash);
+        }
+
+        public bool RunVerifyHashing(string password)
+        {
+            string hashedString = GetHashedPassword(password);
+            bool isPasswordCorrect = VerifyHashing(password, hashedString);
+
+            return isPasswordCorrect;
+        }
     }
 }
