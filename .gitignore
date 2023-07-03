@@ -9,7 +9,8 @@ obj/
 *.sln.docstates
 
 # App.config
-*.App.config
+LoggerDemo/LoggerDemo/**/*.config
+*.config
 
 # NuGet packages
 *.nuget.props
