@@ -15,12 +15,15 @@ namespace LoggerDemo
         public string WriteLog(string message)
         {
             var logPath = Logger.LogPath;
+            string log;
 
             using (StreamWriter writer = new StreamWriter(logPath, true))
             {
-                var log = $"{DateTime.Now}: {message}";
-                return log;
+                log = $"{DateTime.Now}: {message}";
+                //add log to the file
+                writer.WriteLine(log);
             }
+            return log;
         }
     }
 }
