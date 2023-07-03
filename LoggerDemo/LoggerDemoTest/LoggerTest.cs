@@ -38,23 +38,13 @@ namespace LoggerDemoTest
         {
             //given
             string message = "a log.";
+            Logger logger = new Logger();
 
             //when
-            var log = WriteLog(message);
+            var log = logger.WriteLog(message);
 
             //then
             log.Should().EndWith(message);
-        }
-
-        string WriteLog(string message)
-        {
-            var logPath = Logger.LogPath;
-
-            using (StreamWriter writer = new StreamWriter(logPath, true))
-            {
-                var log = $"{DateTime.Now}: {message}";
-                return log;
-            }
         }
     }
 }

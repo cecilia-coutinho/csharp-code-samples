@@ -7,9 +7,20 @@ using System.Threading.Tasks;
 
 namespace LoggerDemo
 {
-    public static class Logger
+    public class Logger
     {
         private static readonly string AppSettingKey = "logPath";
         public static string? LogPath = ConfigurationManager.AppSettings[AppSettingKey];
+
+        public string WriteLog(string message)
+        {
+            var logPath = Logger.LogPath;
+
+            using (StreamWriter writer = new StreamWriter(logPath, true))
+            {
+                var log = $"{DateTime.Now}: {message}";
+                return log;
+            }
+        }
     }
 }

@@ -5,6 +5,9 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Hello!");
+
+            Logger logger = new Logger();
+            Console.WriteLine(logger.WriteLog("lorem ipsum"));
         }
     }
 }
