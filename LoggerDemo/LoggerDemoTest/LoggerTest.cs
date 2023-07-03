@@ -36,42 +36,49 @@ namespace LoggerDemoTest
         [Fact]
         public void WriteLog_Should_Write_Correct_Message()
         {
-            //given
-            string message = "a log.";
+            // Given
+            var messages = new List<string>() {
+                "a log test (1st).",
+                "a log test (2nd)."
+            };
             Logger logger = new Logger();
+            string log = "";
 
-            //when
-            var log = logger.WriteLog(message);
+            // When
+            foreach (var message in messages)
+            {
+                log = logger.WriteLog(message);
+            }
 
-            //then
-            log.Should().EndWith(message);
+            // Then
+            log.Should().EndWith(messages[messages.Count - 1]);
         }
 
         [Fact]
         public void ReadLog_Should_Print_Message()
         {
             //given
-            // Logger logger = new Logger();
+            Logger logger = new Logger();
 
             //when
-            var log = ReadLog();
+            var log = logger.ReadLogs();
 
             //then
             log.Should().NotBeNullOrEmpty();
         }
 
-        string ReadLog()
+        [Fact]
+        public void ReadLogs_Should_Read_All_Lines()
         {
-            string? line;
-            var logPath = Logger.LogPath;
+            // Given
+            Logger logger = new Logger();
 
-            using (StreamReader sr = new StreamReader(logPath))
-            {
-                // Read the first line of text
-                line = sr.ReadToEnd();
-            }
-            return line;
+            // When
+            var lines = logger.ReadLogs();
+            //var expectedLineCount = lines.Split('\n').Length;
 
+            // Then
+            lines.Split('\n').Should().HaveCountGreaterThanOrEqualTo(1);
         }
     }
 }

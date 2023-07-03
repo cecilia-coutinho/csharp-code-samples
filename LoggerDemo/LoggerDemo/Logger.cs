@@ -14,7 +14,7 @@ namespace LoggerDemo
 
         public string WriteLog(string message)
         {
-            var logPath = Logger.LogPath;
+            var logPath = Logger.LogPath ?? throw new InvalidOperationException("LogPath is not set."); ;
             string log;
 
             using (StreamWriter writer = new StreamWriter(logPath, true))
@@ -25,5 +25,17 @@ namespace LoggerDemo
             }
             return log;
         }
+        public string ReadLogs()
+        {
+            string? line;
+            var logPath = Logger.LogPath ?? throw new InvalidOperationException("LogPath is not set."); ;
+
+            using (StreamReader sr = new StreamReader(logPath))
+            {
+                line = sr.ReadToEnd();
+            }
+            return line;
+        }
+
     }
 }

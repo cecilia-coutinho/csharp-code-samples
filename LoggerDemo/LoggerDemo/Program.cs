@@ -6,6 +6,9 @@
         {
             Logger logger = new Logger();
             Console.WriteLine(logger.WriteLog("lorem ipsum."));
+
+            Console.WriteLine("\n ----------------------\n");
+            Console.WriteLine(logger.ReadLogs());
         }
     }
 }
