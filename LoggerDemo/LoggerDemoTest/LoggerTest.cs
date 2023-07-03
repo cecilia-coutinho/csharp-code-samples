@@ -46,5 +46,32 @@ namespace LoggerDemoTest
             //then
             log.Should().EndWith(message);
         }
+
+        [Fact]
+        public void ReadLog_Should_Print_Message()
+        {
+            //given
+            // Logger logger = new Logger();
+
+            //when
+            var log = ReadLog();
+
+            //then
+            log.Should().NotBeNullOrEmpty();
+        }
+
+        string ReadLog()
+        {
+            string? line;
+            var logPath = Logger.LogPath;
+
+            using (StreamReader sr = new StreamReader(logPath))
+            {
+                // Read the first line of text
+                line = sr.ReadLine();
+            }
+            return line;
+
+        }
     }
 }
