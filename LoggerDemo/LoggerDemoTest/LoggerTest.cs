@@ -68,7 +68,7 @@ namespace LoggerDemoTest
             using (StreamReader sr = new StreamReader(logPath))
             {
                 // Read the first line of text
-                line = sr.ReadLine();
+                line = sr.ReadToEnd();
             }
             return line;
 
