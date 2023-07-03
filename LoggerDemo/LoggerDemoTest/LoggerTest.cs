@@ -1,6 +1,7 @@
 using System.Configuration;
 using LoggerDemo;
 using FluentAssertions;
+using System.IO;
 using System.Reflection;
 using System.Collections.Specialized;
 
@@ -12,11 +13,9 @@ namespace LoggerDemoTest
         public void AppSettings_Should_NotBeNullOrEmpty()
         {
             //given
-            string appSettingKey = "logPath";
 
             //when
-            var key = ConfigurationManager.AppSettings[appSettingKey];
-
+            var key = Logger.LogPath;
             //then
             key.Should().NotBeNullOrEmpty();
         }
@@ -25,14 +24,37 @@ namespace LoggerDemoTest
         public void AppSettings_Should_Match_ExpectedValue()
         {
             //given
-            string expectedValue = "C:/TempStudy/log.txt";
-            string appSettingKey = "logPath";
+            string expectedValue = "log.txt";
 
             //when
-            var value = ConfigurationManager.AppSettings[appSettingKey];
+            var value = Logger.LogPath;
 
             //then
-            value.Should().Be(expectedValue);
+            Path.GetFileName(value).Should().Be(expectedValue);
+        }
+
+        [Fact]
+        public void WriteLog_Should_Write_Correct_Message()
+        {
+            //given
+            string message = "a log.";
+
+            //when
+            var log = WriteLog(message);
+
+            //then
+            log.Should().EndWith(message);
+        }
+
+        string WriteLog(string message)
+        {
+            var logPath = Logger.LogPath;
+
+            using (StreamWriter writer = new StreamWriter(logPath, true))
+            {
+                var log = $"{DateTime.Now}: {message}";
+                return log;
+            }
         }
     }
 }
