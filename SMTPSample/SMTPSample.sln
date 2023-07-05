@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTPSample", "SMTPSample\SMTPSample.csproj", "{C87AC5D0-B7AC-4E12-A236-3E3BA0A87B64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTPSampleTest", "SMTPSampleTest\SMTPSampleTest.csproj", "{C7ACF32F-1978-4297-8DDA-D3DA67737C7B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C87AC5D0-B7AC-4E12-A236-3E3BA0A87B64} = {C87AC5D0-B7AC-4E12-A236-3E3BA0A87B64}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C87AC5D0-B7AC-4E12-A236-3E3BA0A87B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87AC5D0-B7AC-4E12-A236-3E3BA0A87B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87AC5D0-B7AC-4E12-A236-3E3BA0A87B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87AC5D0-B7AC-4E12-A236-3E3BA0A87B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7ACF32F-1978-4297-8DDA-D3DA67737C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7ACF32F-1978-4297-8DDA-D3DA67737C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7ACF32F-1978-4297-8DDA-D3DA67737C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7ACF32F-1978-4297-8DDA-D3DA67737C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {302CB99D-281B-499A-8F36-2D972089E83A}
+	EndGlobalSection
+EndGlobal
